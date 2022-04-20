@@ -1,0 +1,158 @@
+==================================
+1. Param file info :
+==================================
+----------------
+master params:
+----------------
+name
+protocol	axi/apb/ahb
+RO/WO/RW
+addr_width
+data_width
+user_width	*applicable if axi
+id_width	*applicable if axi
+fifo_enable	0/1
+fifo_clk	in MHz
+fifo_depth
+----------------
+
+----------------
+slave params:
+----------------
+name
+protocol	axi/apb/ahb
+addr_width
+data_width
+user_width	*applicable if axi
+id_width	*applicable if axi
+start_addr
+end_addr
+fifo_enable	0/1
+fifo_clk	in MHz
+fifo_depth
+==================================
+
+
+
+==================================
+2. local changes :
+==================================
+[/home/divyeshp/intcnt/interconnect/trunk]$ svn diff
+Index: scripts/s_apb
+===================================================================
+--- scripts/s_apb	(revision 821)
++++ scripts/s_apb	(working copy)
+@@ -1,9 +1,9 @@
+-slv
++slv_apb
+ APB
+ 64
+ 32
+-000
+-FFF
++1000
++1FFF
+ 0
+ 100
+ 8
+Index: scripts/m_axi
+===================================================================
+--- scripts/m_axi	(revision 821)
++++ scripts/m_axi	(working copy)
+@@ -1,4 +1,4 @@
+-mst
++mst_axi
+ AXI
+ RW
+ 64
+Index: scripts/s_axi
+===================================================================
+--- scripts/s_axi	(revision 821)
++++ scripts/s_axi	(working copy)
+@@ -1,11 +1,11 @@
+-slv
++slv_axi
+ AXI
+ 64
+ 32
+ 4
+ 8
+-000
+-FFF
++2000
++2FFF
+ 0
+ 100
+ 8
+Index: scripts/m_ahb
+===================================================================
+--- scripts/m_ahb	(revision 821)
++++ scripts/m_ahb	(working copy)
+@@ -1,4 +1,4 @@
+-mst
++mst_ahb
+ AHB
+ RW
+ 64
+Index: scripts/s_ahb
+===================================================================
+--- scripts/s_ahb	(revision 821)
++++ scripts/s_ahb	(working copy)
+@@ -1,4 +1,4 @@
+-slv
++slv_ahb
+ AHB
+ 64
+ 32
+Index: scripts/m_apb
+===================================================================
+--- scripts/m_apb	(revision 821)
++++ scripts/m_apb	(working copy)
+@@ -1,4 +1,4 @@
+-mst
++mst_apb
+ APB
+ RW
+ 64
+Index: sim/runtest
+===================================================================
+--- sim/runtest	(revision 821)
++++ sim/runtest	(working copy)
+@@ -10,7 +10,7 @@
+ my $plus_args="";
+ my $verbose = UVM_MEDIUM;
+ my $wlf;
+-my $do_file = "dump_wave.do";
++my $do_file;
+ my $help;
+ my $cover;
+ my $rtl="../../rtl";
+@@ -72,7 +72,7 @@
+     push (@sim_options, " +WLF_ENABLE=1 -wlf ${testname}.wlf");
+ #print "WLF Switch @sim_options";
+     if (!defined $do_file) {
+-    push(@sim_options,"-do ../$do_file");
++    push(@sim_options,"-do ../dump_wave.do");
+     }
+ }
+ if (defined $do_file) {
+==================================
+
+
+
+==================================
+3. Command to generate RTL & TB:
+==================================
+perl generate.pl -m "m_axi m_apb" -s "s_apb s_ahb"  -tb -dir "aumraj"
+==================================
+
+
+
+
+==================================
+4. To run first test
+==================================
+1. cd aumraj/sim	( go to generated dir's sim )
+2. ./runtest -c
+	*Note: here -c for compile
+==================================

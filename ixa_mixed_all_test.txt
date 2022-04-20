@@ -1,0 +1,804 @@
+		// scenario 22 : MIXED ALL LONG Test
+		if($test$plusargs("iXA_MIXED_ALL_LONG_TEST"))
+		begin		  
+		  
+		  repeat(2) begin
+		  
+		  // PCIe Loopback MODE SCENARIO - 1
+			$display("PCIe Loopback MODE SCENARIO - 1");
+		    test_id = `PCI_TESTID;
+			subtest_id = `LOOPBACK_MODE_SUBTESTID;
+			
+		
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR
+			
+			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+				
+			//#500;
+			//axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#24000;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+		
+		
+		   // DIO ERROR INJECTION SCENARIO - 2
+			$display("DIO ERROR INJECTION SCENARIO - 2"); 
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+			
+			test_id = `DIO_TESTID;
+			subtest_id = `INPUT_MODE_SUBTESTID; // subtest_id for loopback and input modes is common.
+			upper_test_pattern = $urandom;
+			lower_test_pattern = $urandom;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_TP_LO_BYTES_OFFSET), lower_test_pattern);
+			axi_write((`AXI_BASE+`IX_TP_UP_BYTES_OFFSET), upper_test_pattern);
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for DIO input mode
+ 			
+			
+			input_io = upper_test_pattern; // Error injection by overriding upper_test_pattern over lower_test_pattern.
+			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+			
+			test_pattern_check({upper_test_pattern,lower_test_pattern}, AXI_INTR_TOP_0.SFP_PCI_0.pf_dio_0.test_pattern);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+			test_result_check;
+		
+		   // DIO INPUT MODE SCENARIO - 3
+			$display("DIO INPUT MODE SCENARIO - 3");
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0}); 
+			test_id = `DIO_TESTID;
+			subtest_id = `INPUT_MODE_SUBTESTID; // subtest_id for loopback and input modes is common.
+			upper_test_pattern = $urandom;
+			lower_test_pattern = $urandom;
+			
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_TP_LO_BYTES_OFFSET), lower_test_pattern);
+			axi_write((`AXI_BASE+`IX_TP_UP_BYTES_OFFSET), upper_test_pattern);
+			
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for DIO input mode
+ 			
+			
+			input_io = lower_test_pattern;
+			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+         			
+		    test_pattern_check({upper_test_pattern,lower_test_pattern}, AXI_INTR_TOP_0.SFP_PCI_0.pf_dio_0.test_pattern);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+			
+			// DIO OUTPUT MODE SCENARIO - 4
+			$display("DIO OUTPUT MODE SCENARIO - 4");
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0}); 
+			
+			test_id = `DIO_TESTID;
+			subtest_id = `OUTPUT_MODE_SUBTESTID; // 
+			upper_test_pattern = $urandom;
+			lower_test_pattern = $urandom;
+            
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+		    #50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_TP_LO_BYTES_OFFSET), lower_test_pattern);
+			axi_write((`AXI_BASE+`IX_TP_UP_BYTES_OFFSET), upper_test_pattern);
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for DIO Output mode
+ 			
+			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+			
+			test_pattern_check({upper_test_pattern,lower_test_pattern}, AXI_INTR_TOP_0.SFP_PCI_0.pf_dio_0.test_pattern); 
+				
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+            
+			output_mode_check(AXI_INTR_TOP_0.SFP_PCI_0.pf_dio_0.test_pattern[8:0],AXI_INTR_TOP_0.SFP_PCI_0.pf_dio_0.errorcode[8:0]);
+		
+		
+		    // IOE ERROR INJECTION SCENARIO - 5
+			$display("IOE ERROR INJECTION SCENARIO - 5"); 
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0}); 		 
+			
+            test_id = `IOE_TESTID;
+			subtest_id = `INPUT_MODE_SUBTESTID; // 
+			upper_test_pattern = $urandom;
+			lower_test_pattern = $urandom;
+
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_TP_LO_BYTES_OFFSET), lower_test_pattern);
+			axi_write((`AXI_BASE+`IX_TP_UP_BYTES_OFFSET), upper_test_pattern);
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for IOE input mode
+ 			
+			input_io = upper_test_pattern; // Error injection by overriding upper_test_pattern over lower_test_pattern.
+			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+			
+            test_pattern_check({upper_test_pattern,lower_test_pattern}, AXI_INTR_TOP_0.SFP_PCI_0.pf_ioe_0.test_pattern); 
+						
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+			test_result_check;
+		 
+		    // IOE INPUT MODE SCENARIO - 6
+			$display("IOE INPUT MODE - 6");
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0}); 
+					
+			test_id = `IOE_TESTID;
+			subtest_id = `INPUT_MODE_SUBTESTID; // 
+			upper_test_pattern = $urandom;
+			lower_test_pattern = $urandom;
+
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+	
+            axi_write((`AXI_BASE+`IX_TP_LO_BYTES_OFFSET), lower_test_pattern);
+			axi_write((`AXI_BASE+`IX_TP_UP_BYTES_OFFSET), upper_test_pattern);
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for IOE input mode
+ 			
+			input_io = lower_test_pattern;
+			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+			
+            test_pattern_check({upper_test_pattern,lower_test_pattern}, AXI_INTR_TOP_0.SFP_PCI_0.pf_ioe_0.test_pattern); 
+					
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+			
+			
+			// IOE OUTPUT MODE SCENARIO - 7
+			$display("IOE OUTPUT MODE SCENARIO - 7");
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+			
+			test_id = `IOE_TESTID;
+			subtest_id = `OUTPUT_MODE_SUBTESTID; // 
+			upper_test_pattern = $urandom;
+			lower_test_pattern = $urandom;
+
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_TP_LO_BYTES_OFFSET), lower_test_pattern);
+			axi_write((`AXI_BASE+`IX_TP_UP_BYTES_OFFSET), upper_test_pattern);
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for IOE Output mode
+ 			
+			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+			
+			test_pattern_check({upper_test_pattern,lower_test_pattern}, AXI_INTR_TOP_0.SFP_PCI_0.pf_ioe_0.test_pattern); 
+				
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+		
+		    output_mode_check(AXI_INTR_TOP_0.SFP_PCI_0.pf_ioe_0.test_pattern[5:0],AXI_INTR_TOP_0.SFP_PCI_0.pf_ioe_0.errorcode[5:0]);
+		
+		
+		   // PCIe LANE0 ERROR INJECTION SCENARIO - 8
+			$display("PCIe LANE0 ERROR INJECTION SCENARIO - 8"); 
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0}); 			 
+				
+            test_id = `PCI_TESTID;
+			subtest_id = `LOOPBACK_MODE_SUBTESTID;
+			
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+           	axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR
+			
+			force AXI_INTR_TOP_0.SFP_PCI_0.PCI_Test_Block_0.Lane_0_Rx_Data = 64'h0123_ABCD_0000_FFFF;
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+							
+			#50000;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+		    test_result_check;
+			release AXI_INTR_TOP_0.SFP_PCI_0.PCI_Test_Block_0.Lane_0_Rx_Data;
+		
+		    // SEVEN SEG USER MODE SCENARIO - 9
+			$display("SEVEN SEG USER MODE SCENARIO - 9");
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+		
+		    
+			test_id = `SEVEN_SEG_TESTID;
+			subtest_id = `USER_MODE_SUBTESTID; // 
+			upper_test_pattern = $urandom;
+			lower_test_pattern = $urandom;
+
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_TP_LO_BYTES_OFFSET), lower_test_pattern);
+			axi_write((`AXI_BASE+`IX_TP_UP_BYTES_OFFSET), upper_test_pattern);
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for IOE Output mode
+ 			
+			fork
+			busy_check(test_id);
+			
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+			
+			test_pattern_check({upper_test_pattern,lower_test_pattern}, AXI_INTR_TOP_0.SFP_PCI_0.Seven_Seg_0.Data_in); 
+				
+			seven_seg_out_pattern = AXI_INTR_TOP_0.SFP_PCI_0.Seven_Seg_0.Seven_seg_1;
+			
+			test_user_mode_seven_seg(seven_seg_out_pattern,AXI_INTR_TOP_0.SFP_PCI_0.Seven_Seg_0.Data_in[3:0]);
+			 
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+		
+			 
+		    // PCIe LANE1 ERROR INJECTION SCENARIO - 10
+			$display("PCIe LANE1 ERROR INJECTION SCENARIO - 10"); 
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0}); 
+
+			test_id = `PCI_TESTID;
+			subtest_id = `LOOPBACK_MODE_SUBTESTID;
+			
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+           	axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR
+			
+			force AXI_INTR_TOP_0.SFP_PCI_0.PCI_Test_Block_0.Lane_1_Rx_Data = 64'h0123_ABCD_0000_FFFF;
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+						
+		
+			#50000;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+		    test_result_check;
+			release AXI_INTR_TOP_0.SFP_PCI_0.PCI_Test_Block_0.Lane_1_Rx_Data;
+		
+		  
+		   // SEVEN SEG INC MODE SCENARIO - 11
+			$display("SEVEN SEG INC MODE SCENARIO - 11");
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+			
+			test_id = `SEVEN_SEG_TESTID;
+			subtest_id = `INC_MODE_SUBTESTID; // 
+			
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+           	axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for IOE Output mode
+ 				
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+			
+			
+			test_inc_mode_seven_seg(AXI_INTR_TOP_0.SFP_PCI_0.Seven_Seg_0.Seven_seg_1);
+			repeat(15)begin
+			   
+			@(AXI_INTR_TOP_0.SFP_PCI_0.Seven_Seg_0.Seven_seg_1)
+			  begin
+				seven_seg_out_pattern = AXI_INTR_TOP_0.SFP_PCI_0.Seven_Seg_0.Seven_seg_1;
+				test_inc_mode_seven_seg(seven_seg_out_pattern);
+			 end	
+			end
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+			
+		// SFP(10G) LANE0 ERROR INJECTION SCENARIO - 12
+			$display("SFP(10G) LANE0 ERROR INJECTION SCENARIO - 12"); 
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+			
+			test_id = `SFP_TESTID;
+			subtest_id = `LOOPBACK_MODE_SUBTESTID;
+			
+            axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+		     #50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR
+			
+			force AXI_INTR_TOP_0.SFP_PCI_0.SFP_Test_Block_0.Lane_0_Rx_Data = 64'h0123_ABCD_0000_FFFF;
+		
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+						
+			
+			#50000;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+		    test_result_check;
+			release AXI_INTR_TOP_0.SFP_PCI_0.SFP_Test_Block_0.Lane_0_Rx_Data;
+		
+		    // SFP LOOPBACK MODE SCENARIO - 13
+			$display("SFP LOOPBACK MODE SCENARIO - 13");
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+			
+			test_id = `SFP_TESTID;
+			subtest_id = `LOOPBACK_MODE_SUBTESTID;
+			
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+           	axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR
+			
+			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+				
+			
+			#24000;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+		
+		
+		    // SFP(10G) LANE1 ERROR INJECTION SCENARIO - 14
+			$display("SFP(10G) LANE1 ERROR INJECTION SCENARIO - 14"); 
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+			
+			test_id = `SFP_TESTID;
+			subtest_id = `LOOPBACK_MODE_SUBTESTID;
+			
+            axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+		     #50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR
+			
+			force AXI_INTR_TOP_0.SFP_PCI_0.SFP_Test_Block_0.Lane_1_Rx_Data = 64'h0123_ABCD_0000_FFFF;
+		
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+						
+			
+			#50000;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+		    test_result_check;
+			
+			release AXI_INTR_TOP_0.SFP_PCI_0.SFP_Test_Block_0.Lane_1_Rx_Data;
+			
+			
+			// HP INPUT MODE SCENARIO - 15
+			$display("HP INPUT MODE SCENARIO - 15");
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+		    test_id = `HP_TESTID;
+			subtest_id = `INPUT_MODE_SUBTESTID;
+			
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for HP/INPUT MODE
+			
+			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+				
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+		
+			
+			// HP INPUT MODE ERROR SCENARIO - 16
+			$display("HP INPUT MODE ERROR SCENARIO - 16"); 
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+			test_id = `HP_TESTID;
+			subtest_id = `INPUT_MODE_SUBTESTID;
+			
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for HP/INPUT MODE
+			
+			force AXI_INTR_TOP_0.SFP_PCI_0.pf_hp_0.hp_rx =1;
+			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+				
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+			test_result_check;
+			
+			release AXI_INTR_TOP_0.SFP_PCI_0.pf_hp_0.hp_rx;
+			
+			
+			// HP OUTPUT MODE SCENARIO - 17
+			$display("HP OUTPUT MODE SCENARIO - 17");
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+			
+			test_id = `HP_TESTID;
+			subtest_id = `OUTPUT_MODE_SUBTESTID;
+			
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for HP/INPUT MODE
+			
+			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+				
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+			
+			// HP OUTPUT MODE ERROR SCENARIO - 18
+			$display("HP OUTPUT MODE ERROR SCENARIO - 18"); 
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+			
+			test_id = `HP_TESTID;
+			subtest_id = `OUTPUT_MODE_SUBTESTID; 
+			
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for HP/INPUT MODE
+			
+			force AXI_INTR_TOP_0.SFP_PCI_0.pf_hp_0.hp_sig1_rx =1;
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+				
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+			test_result_check;
+			
+			release AXI_INTR_TOP_0.SFP_PCI_0.pf_hp_0.hp_sig1_rx;
+			
+			// LED USER MODE ERROR SCENARIO - 19
+			$display("LED USER MODE ERROR SCENARIO - 19"); 
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});			
+			
+			test_id = `LED_TESTID;
+			subtest_id = `USER_MODE_SUBTESTID; // 
+			upper_test_pattern = $urandom;
+			lower_test_pattern = $urandom;
+
+            axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+
+            axi_write((`AXI_BASE+`IX_TP_LO_BYTES_OFFSET), lower_test_pattern);
+			axi_write((`AXI_BASE+`IX_TP_UP_BYTES_OFFSET), upper_test_pattern);
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for IOE Output mode
+ 			
+			 fork
+			busy_check(test_id);
+			
+			#50;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+			
+			test_pattern_check({upper_test_pattern,lower_test_pattern}, AXI_INTR_TOP_0.SFP_PCI_0.LED_0.Data_in); 
+				
+			LED_out_pattern = AXI_INTR_TOP_0.SFP_PCI_0.LED_0.Pattern;
+			
+			test_user_mode_LED(LED_out_pattern,AXI_INTR_TOP_0.SFP_PCI_0.LED_0.Data_in[3:0]);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#200;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+		
+		
+		    // LED INC MODE ERROR SCENARIO - 20
+			$display("LED INC MODE ERROR SCENARIO - 20"); 
+            axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});			
+			
+			test_id = `LED_TESTID;
+			subtest_id = `INC_MODE_SUBTESTID; // 
+			
+            axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			#50;
+		    axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp); // to check TEST_STATUS =IDLE
+			test_status_check_IDLE;
+            
+			axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h1});  // configuring TCR for IOE Output mode
+ 			
+			fork
+			busy_check(test_id);
+			
+			#50 axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			join
+			
+			#100;
+			// Task to check TEST_STATUS = PROGRESS with TIMEOUT check.
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_PROGRESS(30);
+			
+			test_inc_mode_LED(AXI_INTR_TOP_0.SFP_PCI_0.LED_0.Pattern);	
+			repeat(15)begin
+			   
+			@(AXI_INTR_TOP_0.SFP_PCI_0.LED_0.Pattern)
+			  begin
+			    
+				LED_out_pattern = AXI_INTR_TOP_0.SFP_PCI_0.LED_0.Pattern;
+				test_inc_mode_LED(LED_out_pattern);
+			 end	
+			end
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#500;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			
+			#100;
+			axi_read ((`AXI_BASE+`IX_STATUS_REG_OFFSET),read_data_temp);
+			test_status_check_COMPLETE(50);
+			
+		    axi_write((`AXI_BASE+`IX_CTRL_REG_OFFSET), {23'h0,subtest_id,test_id,1'h0});
+            $display("\n //////////////////////////////////////////////////////// \n");
+			
+			end
+			
+			#200 $finish;
+		end

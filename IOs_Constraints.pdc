@@ -1,0 +1,1078 @@
+input data_in[87:0];
+output data_out[87:0];
+
+set_io -port_name {data_in[0]}\
+-pin_name Y15\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[0]}\
+-pin_name T17\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[1]}\
+-pin_name AB14\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[1]}\
+-pin_name U17\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[2]}\
+-pin_name AA15\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[2]}\
+-pin_name R16\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[3]}\
+-pin_name AB15\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[3]}\
+-pin_name T16\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[4]}\
+-pin_name U7\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[4]}\
+-pin_name W7\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[5]}\
+-pin_name V7\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[5]}\
+-pin_name W6\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[6]}\
+-pin_name V6\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[6]}\
+-pin_name AA6\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[7]}\
+-pin_name AA7\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[7]}\
+-pin_name Y6\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[8]}\
+-pin_name Y4\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[8]}\
+-pin_name AB2\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[9]}\
+-pin_name U4\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[9]}\
+-pin_name W3\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[10]}\
+-pin_name AB3\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[10]}\
+-pin_name AA2\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[11]}\
+-pin_name AA3\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[11]}\
+-pin_name W2\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[12]}\
+-pin_name P3\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[12]}\
+-pin_name M4\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[13]}\
+-pin_name M3\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[13]}\
+-pin_name P4\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[14]}\
+-pin_name R3\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[14]}\
+-pin_name R4\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[15]}\
+-pin_name N4\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[15]}\
+-pin_name M5\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+
+
+set_io -port_name {data_in[16]}\
+-pin_name F2\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[16]}\
+-pin_name H6 \
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[17]}\
+-pin_name L5 \
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[17]}\
+-pin_name H7\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[18]}\
+-pin_name H5\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[18]}\
+-pin_name J8\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[19]}\
+-pin_name H4\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[19]}\
+-pin_name J9 \
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[20]}\
+-pin_name L5\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[20]}\
+-pin_name L8\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[21]}\
+-pin_name L3\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[21]}\
+-pin_name K8 \
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[22]}\
+-pin_name L7\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[22]}\
+-pin_name M9\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[23]}\
+-pin_name L6\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[23]}\
+-pin_name K9\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+
+
+set_io -port_name {data_in[24]}  \
+    - pin_name J6                \
+    - fixed true                 \
+    - i0_std LVCMOS15            \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[24]} \
+    - pin_name K3                \
+    - fixed true                 \
+    - i0_std LVCMOS15            \
+    - DIRECTION OUTPUT
+	
+set_io -port_name {data_in[25]}  \
+    - pin_name J7                \
+    - fixed true                 \
+    - i0_std LVCMOS15            \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[25]} \
+    - pin_name K6                \
+    - fixed true                 \
+    - i0_std  LVCMOS15           \
+    - DIRECTION OUTPUT
+	
+set_io -port_name {data_in[26]}  \
+    - pin_name J4                \
+    - fixed true                 \
+    - i0_std LVCMOS15            \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[26]} \
+    - pin_name K5                \
+    - fixed true                 \
+    - i0_std  LVCMOS15           \
+    - DIRECTION OUTPUT
+	
+set_io -port_name {data_in[27]}  \
+    - pin_name J3                \
+    - fixed true                 \
+    - i0_std LVCMOS15            \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[27]} \
+    - pin_name K4                \
+    - fixed true                 \
+    - i0_std  LVCMOS15           \
+    - DIRECTION OUTPUT
+		
+set_io -port_name {data_in[28]}  \
+    - pin_name F5                \
+    - fixed true                 \
+    - i0_std  LVCMOS15           \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[28]}  \
+    - pin_name D4                 \
+    - fixed true                  \
+    - i0_std  LVCMOS15            \
+    - DIRECTION OUTPUT
+	
+set_io -port_name {data_in[29]}  \
+    - pin_name E5                \
+    - fixed true                 \
+    - i0_std  LVCMOS15           \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[29]}  \
+    - pin_name C4                 \
+    - fixed true                  \
+    - i0_std LVCMOS15             \
+    - DIRECTION OUTPUT
+	
+set_io -port_name {data_in[30]}  \
+    - pin_name E3                \
+    - fixed true                 \
+    - i0_std LVCMOS15            \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[30]}  \
+    - pin_name C6                 \
+    - fixed true                  \
+    - i0_std  LVCMOS15            \
+    - DIRECTION OUTPUT
+	
+set_io -port_name {data_in[31]}  \
+    - pin_name D3                \
+    - fixed true                 \
+    - i0_std  LVCMOS15           \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[31]}  \
+    - pin_name C7                 \
+    - fixed true                  \
+    - i0_std  LVCMOS15            \
+    - DIRECTION OUTPUT
+	 	
+set_io -port_name {data_in[32]}  \
+    - pin_name AB12              \
+    - fixed true                 \
+    - i0_std  LVCMOS15           \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[32]}\
+    - pin_name W13              \
+    - fixed true                \
+    - i0_std  LVCMOS15          \
+    - DIRECTION OUTPUT
+	
+set_io -port_name {data_in[33]}  \
+    - pin_name AA12              \
+    - fixed true                 \
+    - i0_std LVCMOS15            \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[33]}\
+    - pin_name Y13              \
+    - fixed true                \
+    - i0_std LVCMOS15           \
+    - DIRECTION OUTPUT
+	
+set_io -port_name {data_in[34]}  \
+    - pin_name AB13              \
+    - fixed true                 \
+    - i0_std  LVCMOS15           \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[34]}\
+    - pin_name W14              \
+    - fixed true                \
+    - i0_std  LVCMOS15          \
+    - DIRECTION OUTPUT
+	
+set_io -port_name {data_in[35]}  \
+    - pin_name AA13              \
+    - fixed true                 \
+    - i0_std LVCMOS15            \
+    - DIRECTION INPUT
+	
+set_io -port_name {data_out[35]}\
+    - pin_name Y14              \
+    - fixed true                \
+    - i0_std  LVCMOS15          \
+    - DIRECTION OUTPUT
+	
+	
+
+
+
+set_io -port_name {data_in[36]} \
+    -pin_name U8  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[36]} \
+    -pin_name AA8  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[37]} \
+    -pin_name Y8  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+	
+set_io -port_name {data_out[37]} \
+    -pin_name W8  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[38]} \
+    -pin_name U9  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[38]} \
+    -pin_name AB7  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[39]} \
+    -pin_name T8  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[39]} \
+    -pin_name T7  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+	
+set_io -port_name {data_in[40]} \
+    -pin_name W4  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[40]} \
+    -pin_name AB5  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[41]} \
+    -pin_name V4  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[41]} \
+    -pin_name AA5  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[42]} \
+    -pin_name Y5  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+
+set_io -port_name {data_out[42]} \
+    -pin_name U5  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+
+set_io -port_name {data_in[43]} \
+    -pin_name AB4  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INTPUT
+
+set_io -port_name {data_out[43]} \
+    -pin_name V5  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+
+set_io -port_name {data_in[44]} \
+    -pin_name T2  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[44]} \
+    -pin_name P1  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[45]} \
+    -pin_name T1  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[45]} \
+    -pin_name N2  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[46]} \
+    -pin_name R1  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[46]} \
+    -pin_name N1  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[47]} \
+    -pin_name P2  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[47]} \
+    -pin_name M2  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[48]} \
+    -pin_name L1  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[48]} \
+    -pin_name J2  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+	
+set_io -port_name {data_in[49]} \
+    -pin_name L2  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT	
+	
+set_io -port_name {data_out[49]} \
+    -pin_name H1  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[50]} \
+    -pin_name K1  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[50]} \
+    -pin_name H2  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[51]} \
+    -pin_name J1  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[51]} \
+    -pin_name F1  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+
+
+
+
+set_io -port_name {data_in[52]}\
+-pin_name E1\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[52]}\
+-pin_name C2\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[53]}\
+-pin_name D1\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[53]}\
+-pin_name B1\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[54]}\
+-pin_name D2\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[54]}\
+-pin_name B2\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[55]}\
+-pin_name C1\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[55]}\
+-pin_name A2\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[56]}\
+-pin_name B3\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[56]}\
+-pin_name B7\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[57]}\
+-pin_name A3\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[57]}\
+-pin_name A7\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[58]}\
+-pin_name A5\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[58]}\
+-pin_name B8\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[59]}\
+-pin_name A6\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[59]}\
+-pin_name A8\
+-fixed true \
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+
+
+set_io -port_name {data_in[60]}\
+-pin_name R13\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[60]}\
+-pin_name U15\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[61]}\
+-pin_name U13\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[61]}\
+-pin_name V15\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[62]}\
+-pin_name U14\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[62]}\
+-pin_name R15\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[63]}\
+-pin_name V14\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[63]}\
+-pin_name T15\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[64]}\
+-pin_name T13\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[64]}\
+-pin_name U12\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[65]}\
+-pin_name R12\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[65]}\
+-pin_name T11\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[66]}\
+-pin_name W12\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[66]}\
+-pin_name T12\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[67]}\
+-pin_name V12\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[67]}\
+-pin_name W11\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[68]}\
+-pin_name AA11\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[68]}\
+-pin_name AA10\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[69]}\
+-pin_name Y11\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[69]}\
+-pin_name Y10\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[70]}\
+-pin_name V11\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[70]}\
+-pin_name AB9\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[71]}\
+-pin_name AB10\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[71]}\
+-pin_name AB8\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[72]}\
+-pin_name R9\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[72]}\
+-pin_name V10\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[73]}\
+-pin_name R10\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[73]}\
+-pin_name V9\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[74]}\
+-pin_name T10\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[74]}\
+-pin_name W9\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+set_io -port_name {data_in[75]}\
+-pin_name U10\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION INPUT
+
+set_io -port_name {data_out[75]}\
+-pin_name Y9\
+-fixed true\
+-io_std LVCMOS15\
+-DIRECTION OUTPUT
+
+
+
+
+set_io -port_name {data_in[76]} \
+    -pin_name T6  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[76]} \
+    -pin_name R5  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[77]} \
+    -pin_name T5 \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[77]} \
+    -pin_name R6  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[78]} \
+    -pin_name T3  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[78]} \
+    -pin_name P9  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[79]} \
+    -pin_name R8  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[79]} \
+    -pin_name P8  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[80]} \
+    -pin_name P6 \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[80]} \
+    -pin_name N7  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[81]} \
+    -pin_name N5  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[81]} \
+    -pin_name M7  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[82]} \
+    -pin_name N6  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[82]} \
+    -pin_name N8  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[83]} \
+    -pin_name P7  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[83]} \
+    -pin_name M8  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+set_io -port_name {data_in[84]} \
+    -pin_name B10  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[84]} \
+    -pin_name D9  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[85]} \
+    -pin_name B9  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[85]} \
+    -pin_name D8  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[86]} \
+    -pin_name D7  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[86]} \
+    -pin_name E9  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
+set_io -port_name {data_in[87]} \
+    -pin_name C9  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION INPUT
+
+set_io -port_name {data_out[87]} \
+    -pin_name E8  \
+    -fixed true\
+    -i0_std LVCMOS15\
+    -DIRECTION OUTPUT
+
